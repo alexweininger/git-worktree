@@ -1,5 +1,5 @@
 import untildify from 'untildify';
-import os from "os";
+import os from 'os';
 
 export function expandHomePath(path: string): string {
     return untildify(path);
