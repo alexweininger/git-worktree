@@ -8,7 +8,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -19,7 +19,6 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -29,27 +28,33 @@
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
+    "tabWidth": 4,
     "trailingComma": "es5"
   },
-  "name": "node-worktree-manager",
+  "name": "git-worktree",
   "author": "alexweininger",
-  "module": "dist/node-worktree-manager.esm.js",
+  "module": "dist/git-worktree.esm.js",
   "size-limit": [
     {
-      "path": "dist/node-worktree-manager.cjs.production.min.js",
+      "path": "dist/git-worktree.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/node-worktree-manager.esm.js",
+      "path": "dist/git-worktree.esm.js",
       "limit": "10 KB"
     }
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^5.0.3",
+    "@types/jsonfile": "^6.0.1",
     "husky": "^7.0.1",
     "size-limit": "^5.0.3",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "execa": "^5.1.1",
+    "untildify": "^4.0.0"
   }
 }
