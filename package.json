@@ -1,6 +1,7 @@
 {
   "version": "0.1.0",
   "license": "MIT",
+  "displayName": "git-worktree",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -33,6 +34,7 @@
   },
   "name": "git-worktree",
   "author": "alexweininger",
+  "description": "Simple Node.js wrapper for git-worktree",
   "module": "dist/git-worktree.esm.js",
   "size-limit": [
     {
