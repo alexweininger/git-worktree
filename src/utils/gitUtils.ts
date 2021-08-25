@@ -1,7 +1,8 @@
 import fs from 'fs';
+import path from 'path';
 
-export function getGitPath(path: string = process.cwd()): string {
-    return `${path}/.git`;
+export function getGitPath(dir: string = process.cwd()): string {
+    return path.join(dir, '.git');
 }
 
 export function createGitCommand(command: string, dir: string) {
