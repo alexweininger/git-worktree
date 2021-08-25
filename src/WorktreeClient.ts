@@ -32,8 +32,9 @@ export class WorktreeClient {
     ): Promise<void> {
         try {
             const commandText = branchName
-                ? `git worktree add ${newBranch ? '-b' : ''
-                } ${branchName} ${worktreePath}`
+                ? `git worktree add ${
+                      newBranch ? '-b' : ''
+                  } ${branchName} ${worktreePath}`
                 : `git worktree add ${worktreePath} ${branchName}`;
 
             const command = new GitCommand(commandText);
@@ -76,7 +77,7 @@ export class WorktreeClient {
         return output
             ?.split('\n')
             .filter(isLineLocked)
-            .map((line) => line.split(' ')[0]);
+            .map(line => line.split(' ')[0]);
     }
 
     public async remove(worktreePath: string, force?: boolean): Promise<void> {
@@ -92,7 +93,11 @@ export class WorktreeClient {
     }
 
     public async lock(worktreePath: string, reason?: string): Promise<void> {
-        const command = new GitCommand(`git worktree lock ${worktreePath} ${reason ? `--reason ${reason}` : ''}`);
+        const command = new GitCommand(
+            `git worktree lock ${worktreePath} ${
+                reason ? `--reason ${reason}` : ''
+            }`
+        );
         await this.run(command);
     }
 
@@ -101,8 +106,14 @@ export class WorktreeClient {
         await this.run(command);
     }
 
-    public async move(worktreePath: string, newPath: string, force?: boolean): Promise<void> {
-        const command = new GitCommand(`git worktree move ${worktreePath} ${newPath} ${force ? '-f' : ''}`);
+    public async move(
+        worktreePath: string,
+        newPath: string,
+        force?: boolean
+    ): Promise<void> {
+        const command = new GitCommand(
+            `git worktree move ${worktreePath} ${newPath} ${force ? '-f' : ''}`
+        );
         await this.run(command);
     }
 
