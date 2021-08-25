@@ -1,6 +1,6 @@
 # git-worktree
 
-![npm](https://img.shields.io/npm/v/git-worktree) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/alexweininger/git-worktree/CI) ![David](https://img.shields.io/david/alexweininger/git-worktree) ![GitHub](https://img.shields.io/github/license/alexweininger/git-worktree)
+![npm](https://img.shields.io/npm/v/git-worktree) ![npm bundle size](https://img.shields.io/bundlephobia/min/git-worktree) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/alexweininger/git-worktree/CI)
 
 > Simple Node.js wrapper for git-worktree
 
