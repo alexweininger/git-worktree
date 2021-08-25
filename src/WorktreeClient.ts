@@ -106,12 +106,8 @@ export class WorktreeClient {
         await this.run(command);
     }
 
-    public async isLocked(worktreePath: string): Promise<void> {
-        const command = new GitCommand('git worktree list');
-        const output = await this.run(command);
-        if (output) {
-            const lines = output.split('\n');
-
-        }
+    public async isWorktreeLocked(worktreePath: string): Promise<boolean> {
+        const lockedWorktrees = await this.listLocked();
+        return lockedWorktrees?.includes(worktreePath) ?? false;
     }
 }
