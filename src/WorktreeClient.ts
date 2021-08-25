@@ -28,9 +28,8 @@ export class WorktreeClient {
     ): Promise<void> {
         try {
             const commandText = branchName
-                ? `git worktree add ${
-                      newBranch ? '-b' : ''
-                  } ${branchName} ${worktreePath}`
+                ? `git worktree add ${newBranch ? '-b' : ''
+                } ${branchName} ${worktreePath}`
                 : `git worktree add ${worktreePath} ${branchName}`;
 
             const command = new GitCommand(commandText);
@@ -60,6 +59,21 @@ export class WorktreeClient {
 
     public async prune(): Promise<void> {
         const command = new GitCommand('git worktree prune');
+        await this.run(command);
+    }
+
+    public async lock(worktreePath: string, reason?: string): Promise<void> {
+        const command = new GitCommand(`git worktree lock ${worktreePath} ${reason ? `--reason ${reason}` : ''}`);
+        await this.run(command);
+    }
+
+    public async unlock(worktreePath: string): Promise<void> {
+        const command = new GitCommand(`git worktree unlock ${worktreePath}`);
+        await this.run(command);
+    }
+
+    public async move(worktreePath: string, newPath: string, force?: boolean): Promise<void> {
+        const command = new GitCommand(`git worktree move ${worktreePath} ${newPath} ${force ? '-f' : ''}`);
         await this.run(command);
     }
 }
