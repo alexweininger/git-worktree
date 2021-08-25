@@ -94,9 +94,9 @@ export class WorktreeClient {
 
     public async lock(worktreePath: string, reason?: string): Promise<void> {
         const command = new GitCommand(
-            `git worktree lock ${worktreePath} ${
+            `git worktree lock ${
                 reason ? `--reason ${reason}` : ''
-            }`
+            } ${worktreePath}`
         );
         await this.run(command);
     }
