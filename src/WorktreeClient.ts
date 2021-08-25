@@ -1,11 +1,15 @@
 import path from 'path';
 import { GitCommand } from './GitCommand';
-import { isRepo } from './utils/gitUtils';
+import { getGitPath, isRepo } from './utils/gitUtils';
+
+interface ListOptions {
+    locked?: boolean;
+}
 
 export class WorktreeClient {
     constructor(private readonly dir: string) {
         if (!isRepo(dir)) {
-            throw Error(`"${dir}" is not a repo`);
+            throw Error(`"${getGitPath(dir)}" is not a repo`);
         }
     }
 
@@ -41,13 +45,38 @@ export class WorktreeClient {
         }
     }
 
-    public async list(): Promise<any[] | undefined> {
+    public async list(options?: ListOptions): Promise<any[] | undefined> {
+        if (!options?.locked) {
+            return await this.listAll();
+        }
+
+        if (options.locked) {
+            return await this.listLocked();
+        }
+    }
+
+    private async listAll(): Promise<any[] | undefined> {
         const command = new GitCommand('git worktree list --porcelain');
         const output = await this.run(command);
+
         return output
             ?.split('\n')
             .filter((line: string) => line.startsWith('worktree'))
             .map((line: string) => line.replace('worktree ', ''));
+    }
+
+    private async listLocked(): Promise<any[] | undefined> {
+        const command = new GitCommand('git worktree list');
+        const output = await this.run(command);
+
+        const isLineLocked = (line: string) => {
+            return line.split(' ').includes('locked');
+        };
+
+        return output
+            ?.split('\n')
+            .filter(isLineLocked)
+            .map((line) => line.split(' ')[0]);
     }
 
     public async remove(worktreePath: string, force?: boolean): Promise<void> {
@@ -75,5 +104,14 @@ export class WorktreeClient {
     public async move(worktreePath: string, newPath: string, force?: boolean): Promise<void> {
         const command = new GitCommand(`git worktree move ${worktreePath} ${newPath} ${force ? '-f' : ''}`);
         await this.run(command);
+    }
+
+    public async isLocked(worktreePath: string): Promise<void> {
+        const command = new GitCommand('git worktree list');
+        const output = await this.run(command);
+        if (output) {
+            const lines = output.split('\n');
+
+        }
     }
 }
